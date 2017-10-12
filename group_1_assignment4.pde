@@ -1,4 +1,5 @@
 BackgroundStar[] stars;
+shootingStar[] shootingStar;
 
 public class BackgroundStar {
   int x, y, frame, speed;
@@ -34,13 +35,36 @@ public class BackgroundStar {
     }
     frame++;
   }
+
+}
+
+public class shootingStar extends BackgroundStar {
+    int tail_length = 10;
+    public void drawtail() {
+      color tail_color = color((int)(Math.random() * 255), (int)(Math.random() * 255), (int)(Math.random() * 255));
+      stroke(tail_color);
+      //4 long tails
+      line(int(x),int(y), int(x) - tail_length*((cos(x)+sin(x))), int(y)+ tail_length*(cos(x)-sin(x)));
+      line(int(x),int(y), int(x) + tail_length*((cos(x)+sin(x))), int(y)- tail_length*(cos(x)-sin(x)));
+      line(int(x),int(y), int(x) - tail_length*((cos(x+.5*PI)+sin(x+.5*PI))), int(y)+ tail_length*(cos(x+.5*PI)-sin(x+.5*PI)));
+      line(int(x),int(y), int(x) - tail_length*((cos(x-.5*PI)+sin(x-.5*PI))), int(y)+ tail_length*(cos(x-.5*PI)-sin(x-.5*PI)));
+      //4 short tails
+      line(int(x),int(y), int(x) - .5*tail_length*((cos(x+.75*PI)+sin(x+.75*PI))), int(y)+ .5*tail_length*(cos(x+.75*PI)-sin(x+.75*PI)));
+      line(int(x),int(y), int(x) - .5*tail_length*((cos(x+.25*PI)+sin(x+.25*PI))), int(y)+ .5*tail_length*(cos(x+.25*PI)-sin(x+.25*PI)));
+      line(int(x),int(y), int(x) - .5*tail_length*((cos(x+1.25*PI)+sin(x+1.25*PI))), int(y)+ .5*tail_length*(cos(x+1.25*PI)-sin(x+1.25*PI)));
+      line(int(x),int(y), int(x) - .5*tail_length*((cos(x+1.75*PI)+sin(x+1.75*PI))), int(y)+ .5*tail_length*(cos(x+1.75*PI)-sin(x+1.75*PI)));
+    }
 }
 
 void setup() {
   size(1280, 720);
   stars = new BackgroundStar[500];
+  shootingStar = new shootingStar[20];
   for (int i = 0; i < stars.length; i++) {
     stars[i] = new BackgroundStar();
+  }
+  for (int j = 0; j < shootingStar.length; j++) {
+    shootingStar[j] = new shootingStar();
   }
 }
 
@@ -48,5 +72,9 @@ void draw() {
   background(20);
   for (int i = 0; i < stars.length; i++) {
     stars[i].draw();
+  }
+  for (int j = 0; j < shootingStar.length; j++){
+    shootingStar[j].drawtail();
+    shootingStar[j].draw();
   }
 }
